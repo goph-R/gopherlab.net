@@ -90,6 +90,9 @@ body {
     background: var(--bg);
     color: var(--text);
     font: 18px/1.5 var(--font);
+    display: flex; flex-direction: column;
+    min-height: 100vh;    /* fallback for older browsers */
+    min-height: 100dvh;   /* the visible height on phones, where the address bar comes and goes */
 }
 
 a { color: var(--link); text-decoration: none; }
@@ -119,6 +122,9 @@ img, video { max-width: 100%; height: auto; }
    the shape this design is not. */
 .site-header, .site-nav, .site-content, .site-footer {
     max-width: var(--container); margin-left: auto; margin-right: auto;
+    /* the body is a flex column, and there auto side margins shrink a box to its content
+       rather than centring a full width one - so the width is said, and `max-width` caps it */
+    width: 100%;
 }
 /* inside the box, the inset is padding rather than a second width - one thing decides how wide
    the site is, and it is `--container` */
@@ -130,7 +136,12 @@ img, video { max-width: 100%; height: auto; }
 
 /* no rules anywhere in the chrome: one surface meeting another is the whole separation, and a
    1px line across it is a seam the original deliberately takes out */
-.site-header { background: var(--bar); }
+.site-header {
+    background: var(--bar);
+    border-image-source: linear-gradient(var(--bar) 0 0);
+    border-image-slice: 0 fill;
+    border-image-outset: 0 100vw;
+}
 .header-inner { display: flex; align-items: center; gap: 18px;
                 padding-top: 18px; padding-bottom: 18px; }
 
@@ -341,7 +352,12 @@ img, video { max-width: 100%; height: auto; }
 
 /* the whole two column area is the lighter surface, and the page shows around it - so an
    article is not a card on a background, it is text on the page it belongs to */
-.site-content { background: var(--surface); padding: 40px 0 60px; }
+.site-content {
+    background: var(--surface); padding: 40px 0 60px;
+    border-image-source: linear-gradient(var(--surface) 0 0);
+    border-image-slice: 0 fill;
+    border-image-outset: 0 100vw;
+}
 body.home .site-content { padding-top: 0; }
 
 .content-area { display: block; }
@@ -770,7 +786,13 @@ body.home .site-content { padding-top: 0; }
 
 /* the original's footer is one bar - a widget area is there if a site fills it, and this site
    does not, so with an empty `footer` place the bar is all that renders */
-.site-footer { background: var(--bar); color: #ccc; padding: 0; }
+.site-footer {
+    background: var(--surface); color: #ccc; padding: 0;
+    border-image-source: linear-gradient(var(--surface) 0 0);
+    border-image-slice: 0 fill;
+    border-image-outset: 0 100vw;
+    flex-grow: 1;
+}
 .site-footer .footer-widgets { padding-top: 40px; }
 .footer-widgets { display: grid; gap: 40px; grid-template-columns: 1fr; }
 @media (min-width: 768px) { .footer-widgets { grid-template-columns: repeat(3, 1fr); } }
@@ -783,8 +805,13 @@ body.home .site-content { padding-top: 0; }
 .site-footer li { padding: 4px 0; }
 .site-footer .menu { display: block; }
 .footer-bottom { padding: 22px 0; font-size: 15px; color: #ccc;
-                 display: flex; gap: 16px; align-items: center; }
+                 display: flex; gap: 16px; align-items: center;
+                 /*border-top: 1px solid var(--rule)*/}
 .footer-widgets + .footer-bottom { margin-top: 40px; }
+/* the small print centred, with the bullet in the spacer between the two - so the spacer is
+   only as wide as the bullet rather than the stretch that pushes the two apart in the header */
+.footer-bottom { justify-content: center; flex-wrap: wrap; }
+.footer-bottom .spacer { flex: none; }
 
 /* --- forms, for the account screens -------------------------------------------------------- */
 
