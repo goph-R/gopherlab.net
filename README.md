@@ -1,7 +1,9 @@
-# A dpress site
+# gopherlab.net
 
-The runnable site: a thin shell around [dpress](https://github.com/goph-R/dynart-dpress) holding
-the configuration, the themes, the uploads and the front controller.
+The site behind [gopherlab.net](https://gopherlab.net): a thin shell around
+[dpress](https://github.com/goph-R/dynart-dpress) holding the configuration, the themes, the
+uploads and the front controller. The design is the `gopherlab` theme, documented in
+[themes/gopherlab/README.md](themes/gopherlab/README.md).
 
 ## Setting one up
 
