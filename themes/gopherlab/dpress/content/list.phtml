@@ -56,14 +56,19 @@ $featured_posts = $featured_posts ?? [];
                     <?php foreach (array_slice($featured_posts, 1) as $post): ?>
                         <article class="featured-small<?= isset($thumbnails[$post['id']]) ? ' has-image' : '' ?>">
                             <?php if (isset($thumbnails[$post['id']])): ?>
-                                <?php // `medium` and not `thumb`: the thumb preset is a *square crop*
-                                      // (320x320, cropped), so a 16:9 screenshot arrived with its sides
-                                      // already cut off before the stylesheet ever saw it. `medium` fits
-                                      // inside its box and keeps the ratio, and the list below asks for
-                                      // the same file, so this generates nothing new. ?>
+                                <?php // **The thumb on a wide screen, `medium` below it.** Above
+                                      // 1024px the card's picture is 120px, and the thumb (320px at
+                                      // most, its shape kept since dpress 0.87.0) is sharp there even
+                                      // at two pixels to a point; below it the card is the width of
+                                      // the column and wants `medium`. `sizes` says which is which and
+                                      // the browser picks - `src` is for one that cannot. ?>
                                 <a class="featured-thumbnail" tabindex="-1" aria-hidden="true"
                                    href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>"><?=
-                                    $mediaView->tag($thumbnails[$post['id']], 'medium', ['alt' => ''])
+                                    $mediaView->tag($thumbnails[$post['id']], 'medium', [
+                                        'alt'    => '',
+                                        'srcset' => $mediaView->srcset($thumbnails[$post['id']], ['thumb', 'medium']),
+                                        'sizes'  => '(min-width: 1025px) 120px, (min-width: 780px) 70vw, 100vw',
+                                    ])
                                 ?></a>
                             <?php endif ?>
                             <div class="featured-small-body">
@@ -94,9 +99,17 @@ $featured_posts = $featured_posts ?? [];
                   // post without a picture should have the whole width rather than an empty 40% ?>
             <article class="post-summary<?= isset($thumbnails[$post['id']]) ? ' has-image' : '' ?>">
                 <?php if (isset($thumbnails[$post['id']])): ?>
+                    <?php // The thumb beside the words on a wide screen, `medium` where the picture
+                          // is the column's width. 40% of the column is at most ~340px, said as
+                          // 320px: the thumb at a twentieth over its size is not a difference
+                          // anybody sees, and a pixel more would send every desktop to `medium`. ?>
                     <a class="post-thumbnail" tabindex="-1" aria-hidden="true"
                        href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>"><?=
-                        $mediaView->tag($thumbnails[$post['id']], 'medium', ['alt' => ''])
+                        $mediaView->tag($thumbnails[$post['id']], 'medium', [
+                            'alt'    => '',
+                            'srcset' => $mediaView->srcset($thumbnails[$post['id']], ['thumb', 'medium']),
+                            'sizes'  => '(min-width: 1025px) 320px, (min-width: 768px) 70vw, 100vw',
+                        ])
                     ?></a>
                 <?php endif ?>
                 <div class="post-summary-body">
