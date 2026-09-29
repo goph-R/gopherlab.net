@@ -33,3 +33,7 @@
 # The Docs plugin is its own repository, cloned in here the way a plugin is installed:
 # https://github.com/goph-R/dynart-dpress-docs
 /plugins/docs/
+
+# The theme editor plugin is its own repository too:
+# https://github.com/goph-R/dynart-dpress-theme-editor
+/plugins/theme-editor/
