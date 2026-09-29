@@ -671,31 +671,7 @@ body.home .site-content { padding-top: 0; }
 .entry-content th[align='center'], .entry-content td[align='center'] { text-align: center; }
 
 
-/* A picture beside a list: an avatar and a row of contact links, which is a *layout* and not a
-   table - a table would be announced as one and, with `overflow-x: auto` on it, would scroll
-   sideways on a phone instead of stacking.
-
-   The shape is the selector: a paragraph holding nothing but an image, immediately followed by
-   a list. `:has()` is what makes that expressible - markdown cannot put a class on anything, so
-   the only handle is the structure the author wrote.
-
-   Only above 700px. Below it the float is simply not applied and the two stack, which is the
-   whole reason for doing it this way. */
-@media (min-width: 700px) {
-    .entry-content p:has(> img:only-child):has(+ ul) {
-        float: left; margin: 0 10px 10px 0; max-width: 180px;
-    }
-    /* `overflow: hidden` makes the list its own formatting context, so it sits *beside* the
-       float in a column of its own rather than wrapping its lines around it */
-    .entry-content p:has(> img:only-child):has(+ ul) + ul { overflow: hidden; }
-}
-/* Outside the query, because this is what the list *is* rather than how it sits beside the
-   picture: no bullets, an indent of its own, and no margin. A row of contact links is a list
-   for the sake of being a list of things, not a list somebody is counting through. */
-.entry-content p:has(> img:only-child):has(+ ul) + ul {
-    list-style: none; padding-left: 1em; margin: 0;
-}
-/* and the float ends where the content does, however tall the picture turned out to be */
+/* whatever a page floats (the site's own Additional CSS does), it ends where the content does */
 .entry-content::after { content: ""; display: block; clear: both; }
 
 /* --- boxes --------------------------------------------------------------------------------- */
@@ -704,12 +680,6 @@ body.home .site-content { padding-top: 0; }
    centres them - two of them side by side, as the box was written for. */
 
 .entry-content .center { text-align: center; }
-/* A lone picture before a list is floated beside it on a wide screen (above). Asked to be
-   centred, it is not: the float would put it back on the left. */
-@media (min-width: 700px) {
-    .entry-content .center p:has(> img:only-child):has(+ ul) { float: none; margin: 0 0 10px; max-width: none; }
-    .entry-content .center p:has(> img:only-child):has(+ ul) + ul { overflow: visible; }
-}
 
 /* --- callouts ----------------------------------------------------------------------------- */
 /* `> [!WARNING]` in the markdown. The site drew these by hand as `.gopherlab-panel`; dpress
