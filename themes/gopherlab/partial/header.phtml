@@ -1,6 +1,7 @@
 <?php // The brand, and behind it the menu, the social marks and the account links. On a wide
       // screen those three are where they have always been; below 780px they are one panel
       // behind the button, and the header is a brand and a button. ?>
+<?php require_once dirname(__DIR__).'/strings.php' ?>
 <header class="site-header">
     <div class="container header-inner">
         <a class="brand" href="<?= esc_attr(route_url('/')) ?>">
@@ -21,7 +22,7 @@
               // somebody can still use rather than one that has silently gone. ?>
         <button class="nav-toggle" type="button" aria-controls="site-panel" aria-expanded="false">
             <span class="nav-toggle-bars" aria-hidden="true"></span>
-            <span class="sr-only">Menu</span>
+            <span class="sr-only"><?= esc_html(gopherlab_text('menu')) ?></span>
         </button>
     </div>
     <?php // One box for the three things a narrow screen puts behind the button, in the order
@@ -41,18 +42,18 @@
                   // adding a third needs no template change ?>
             <div class="site-account">
                 <?php if (!empty($current_user)): ?>
-                    <a href="<?= esc_attr(route_url('/profile')) ?>"><?= esc_html($current_user->name() ?: 'Profile') ?></a>
+                    <a href="<?= esc_attr(route_url('/profile')) ?>"><?= esc_html($current_user->name() ?: gopherlab_text('profile')) ?></a>
                     <?php // a form and not a link, because `/logout` is POST only: a link that
                           // ends a session can be followed by a prefetcher, a crawler or an
                           // `<img>` somebody planted on another page, and the visitor is
                           // simply signed out ?>
                     <form class="logout" method="post" action="<?= esc_attr(route_url('/logout')) ?>">
-                        <button type="submit">Log out</button>
+                        <button type="submit"><?= esc_html(gopherlab_text('log_out')) ?></button>
                     </form>
                 <?php else: ?>
-                    <a href="<?= esc_attr(route_url('/login')) ?>">Log in</a>
+                    <a href="<?= esc_attr(route_url('/login')) ?>"><?= esc_html(gopherlab_text('log_in')) ?></a>
                     <?php if (!empty($registration_open)): ?>
-                        <a href="<?= esc_attr(route_url('/register')) ?>">Register</a>
+                        <a href="<?= esc_attr(route_url('/register')) ?>"><?= esc_html(gopherlab_text('register')) ?></a>
                     <?php endif ?>
                 <?php endif ?>
             </div>

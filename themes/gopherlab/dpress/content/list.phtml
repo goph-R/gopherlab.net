@@ -7,6 +7,7 @@
  *
  * `$thumbnails` is keyed by content id and cost one query for the whole page.
  */
+require_once dirname(__DIR__, 2).'/strings.php';
 $this->useLayout($layout ?? 'dpress:layout');
 $featured_posts = $featured_posts ?? [];
 ?>
@@ -41,13 +42,13 @@ $featured_posts = $featured_posts ?? [];
                 <div class="featured-details">
                     <h2><a href="<?= esc_attr(route_url($post_path.$lead['slug'])) ?>"><?= esc_html($lead['title']) ?></a></h2>
                     <p class="meta">
-                        <?php if (isset($authors[$lead['id']])): ?>by <?= esc_html($authors[$lead['id']]) ?> &mdash; <?php endif ?>
+                        <?php if (isset($authors[$lead['id']])): ?><?= esc_html(gopherlab_text('by_author', $authors[$lead['id']])) ?> &mdash; <?php endif ?>
                         <?= $dates->tag($lead['published_at']) ?>
                     </p>
                     <?php // drawn by the stylesheet only where there is room for them: over the
                           // picture, a lead and a button would be most of the photograph ?>
                     <div class="post-lead"><?= $lead['lead_html'] ?></div>
-                    <a class="read-more" href="<?= esc_attr(route_url($post_path.$lead['slug'])) ?>">Read more<span
+                    <a class="read-more" href="<?= esc_attr(route_url($post_path.$lead['slug'])) ?>"><?= esc_html(gopherlab_text('read_more')) ?><span
                         class="sr-only">: <?= esc_html($lead['title']) ?></span></a>
                 </div>
             </article>
@@ -77,7 +78,7 @@ $featured_posts = $featured_posts ?? [];
                                 <?php // shown from 1025px down, where the four stop being a column
                                       // beside the picture and become entries of the list ?>
                                 <div class="post-lead"><?= $post['lead_html'] ?></div>
-                                <a class="read-more" href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>">Read more<span
+                                <a class="read-more" href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>"><?= esc_html(gopherlab_text('read_more')) ?><span
                                     class="sr-only">: <?= esc_html($post['title']) ?></span></a>
                             </div>
                         </article>
@@ -92,7 +93,7 @@ $featured_posts = $featured_posts ?? [];
         <h1 class="entry-title"><?= esc_html($heading) ?></h1>
     <?php endif ?>
     <?php if (empty($posts)): ?>
-        <p>Nothing published yet.</p>
+        <p><?= esc_html(gopherlab_text('nothing_published')) ?></p>
     <?php else: ?>
         <?php foreach ($posts as $post): ?>
             <?php // `has-image` because the picture and the words are two grid columns, and a
@@ -115,7 +116,7 @@ $featured_posts = $featured_posts ?? [];
                 <div class="post-summary-body">
                     <h2><a href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>"><?= esc_html($post['title']) ?></a></h2>
                     <p class="meta">
-                        <?php if (isset($authors[$post['id']])): ?>by <?= esc_html($authors[$post['id']]) ?> &mdash; <?php endif ?>
+                        <?php if (isset($authors[$post['id']])): ?><?= esc_html(gopherlab_text('by_author', $authors[$post['id']])) ?> &mdash; <?php endif ?>
                         <?= $dates->tag($post['published_at']) ?>
                     </p>
                     <?php // in a box of its own so the stylesheet can cut it off at a number of
@@ -126,7 +127,7 @@ $featured_posts = $featured_posts ?? [];
                           // post for anybody who does not know the title is a link. The title
                           // rides along for a screen reader, where a page of identical
                           // "Read more" links says nothing about where any of them go. ?>
-                    <a class="read-more" href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>">Read more<span
+                    <a class="read-more" href="<?= esc_attr(route_url($post_path.$post['slug'])) ?>"><?= esc_html(gopherlab_text('read_more')) ?><span
                         class="sr-only">: <?= esc_html($post['title']) ?></span></a>
                 </div>
             </article>

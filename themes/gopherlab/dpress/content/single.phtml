@@ -6,6 +6,7 @@
  * date, and the prose on its own surface. The featured picture is deliberately *not* here - the
  * blog hides it on a single post, where it has already been seen on the card that led here.
  */
+require_once dirname(__DIR__, 2).'/strings.php';
 $this->useLayout($layout ?? 'dpress:layout');
 ?>
 <?php $this->startBlock('content') ?>
@@ -21,9 +22,9 @@ $this->useLayout($layout ?? 'dpress:layout');
         <?php endif ?>
         <h1 class="entry-title"><?= esc_html($content->title) ?></h1>
         <p class="meta">
-            <?php if (($author ?? '') !== ''): ?>by <?= esc_html($author) ?> &mdash; <?php endif ?>
+            <?php if (($author ?? '') !== ''): ?><?= esc_html(gopherlab_text('by_author', $author)) ?> &mdash; <?php endif ?>
             <?= $dates->tag($content->published_at) ?>
-            <?php if (!$content->isPublished()): ?> &middot; <strong>draft</strong><?php endif ?>
+            <?php if (!$content->isPublished()): ?> &middot; <strong><?= esc_html(gopherlab_text('draft')) ?></strong><?php endif ?>
         </p>
         <div class="entry-content">
             <?php if ($show_lead ?? true): ?><?= $content->lead_html ?><?php endif ?>
@@ -42,7 +43,7 @@ $this->useLayout($layout ?? 'dpress:layout');
             </p>
         <?php endif ?>
         <?php if (!empty($attachments)): ?>
-            <h2>Attachments</h2>
+            <h2><?= esc_html(gopherlab_text('attachments')) ?></h2>
             <ul class="attachments">
                 <?php foreach ($attachments as $row): ?>
                     <li>

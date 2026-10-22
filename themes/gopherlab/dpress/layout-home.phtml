@@ -8,11 +8,12 @@
  *
  * The strip itself is rendered by `content/list.phtml`, which is where `$featured` arrives.
  */
+require_once dirname(__DIR__).'/strings.php';
 $sidebar = $places->render('sidebar');
 $top = $places->render('home_top');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= esc_attr(gopherlab_locale()) ?>">
 <head>
 <?= $this->fetch('theme:partial/head', ['title' => $title ?? '']) ?>
 </head>

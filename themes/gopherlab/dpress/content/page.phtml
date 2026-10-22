@@ -7,6 +7,7 @@
  * of child pages is left out - the menu is how this site is navigated, and a second index at
  * the foot of a page is furniture. The breadcrumb stays: that says where you *are*.
  */
+require_once dirname(__DIR__, 2).'/strings.php';
 ?>
 <?php $this->useLayout($layout ?? 'dpress:layout') ?>
 <?php $this->startBlock('content') ?>
@@ -14,7 +15,7 @@
 <?= $this->fetch('dpress:content/preview-bar', ['preview' => $preview ?? false]) ?>
     <?php if (!empty($ancestors)): ?>
         <nav class="breadcrumb">
-            <a href="<?= esc_attr(route_url('/')) ?>">Home</a>
+            <a href="<?= esc_attr(route_url('/')) ?>"><?= esc_html(gopherlab_text('home')) ?></a>
             <?php foreach ($ancestors as $ancestor): ?>
                 / <a href="<?= esc_attr(route_url($ancestor->slug === '' ? '/' : '/'.$ancestor->slug)) ?>"><?= esc_html($ancestor->title) ?></a>
             <?php endforeach ?>
@@ -22,7 +23,7 @@
     <?php endif ?>
     <article>
         <h1 class="entry-title"><?= esc_html($content->title) ?></h1>
-        <?php if (!$content->isPublished()): ?><p class="meta"><strong>draft</strong></p><?php endif ?>
+        <?php if (!$content->isPublished()): ?><p class="meta"><strong><?= esc_html(gopherlab_text('draft')) ?></strong></p><?php endif ?>
         <?php if (!empty($featured)): ?>
             <?php // Eager: this sits above the fold and is the largest thing on the page, so the
                   // default lazy-load would keep the browser from starting it until layout has
@@ -40,7 +41,7 @@
             'page_urls' => $page_urls ?? [],
         ]) ?>
         <?php if (!empty($attachments)): ?>
-            <h2 class="attachments-title">Attachments</h2>
+            <h2 class="attachments-title"><?= esc_html(gopherlab_text('attachments')) ?></h2>
             <ul class="attachments">
                 <?php foreach ($attachments as $row): ?>
                     <li>

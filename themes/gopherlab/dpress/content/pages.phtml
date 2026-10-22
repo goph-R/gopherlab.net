@@ -1,0 +1,32 @@
+<?php
+/**
+ * The way through a body that was written in more than one page
+ *
+ * The CMS's own `content/pages.phtml` with its three words - Previous, Next and the nav's label -
+ * taken from `strings.php`, so they come out in the site's language. The markup and the classes
+ * are the CMS's, which is what keeps the stylesheet's `.page-nav` rules applying unchanged.
+ *
+ * Expects: $page, $page_count, $prev_url, $next_url, $page_urls.
+ */
+require_once dirname(__DIR__, 2).'/strings.php';
+?>
+<?php if (($page_count ?? 1) > 1): ?>
+    <nav class="page-nav" aria-label="<?= esc_attr(gopherlab_text('pages_of_article')) ?>">
+        <?php if ($prev_url !== ''): ?>
+            <a class="page-prev" href="<?= esc_attr($prev_url) ?>" rel="prev"><?= gopherlab_text('previous_page') ?></a>
+        <?php endif ?>
+        <span class="page-numbers">
+            <?php foreach (($page_urls ?? []) as $index => $url): ?>
+                <?php $number = $index + 1 ?>
+                <?php if ($number === (int)$page): ?>
+                    <span class="page-number current" aria-current="page"><?= $number ?></span>
+                <?php else: ?>
+                    <a class="page-number" href="<?= esc_attr($url) ?>"><?= $number ?></a>
+                <?php endif ?>
+            <?php endforeach ?>
+        </span>
+        <?php if ($next_url !== ''): ?>
+            <a class="page-next" href="<?= esc_attr($next_url) ?>" rel="next"><?= gopherlab_text('next_page') ?></a>
+        <?php endif ?>
+    </nav>
+<?php endif ?>

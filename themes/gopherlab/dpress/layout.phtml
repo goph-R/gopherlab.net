@@ -6,10 +6,11 @@
  * post here on purpose: same column, same sidebar, and the only thing that changes is what is
  * in the column. That is a decision expressed by *not* writing `layout-archive.phtml`.
  */
+require_once dirname(__DIR__).'/strings.php';
 $sidebar = $places->render('sidebar');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= esc_attr(gopherlab_locale()) ?>">
 <head>
 <?= $this->fetch('theme:partial/head', ['title' => $title ?? '']) ?>
 </head>
